@@ -13,7 +13,12 @@ const ProductList = () => {
   const productsPerPage = 5;
 
   const filteredProducts = products
-    .filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+    .filter(product => 
+      product.name.toLowerCase().includes(search.toLowerCase()) ||
+      product.desc.toLowerCase().includes(search.toLowerCase()) ||
+      product.category.toLowerCase().includes(search.toLowerCase()) ||
+      product.price.toString().includes(search)
+    )
     .sort((a, b) => {
       return sortOrder === 'asc'
         ? a.name.localeCompare(b.name)
@@ -44,10 +49,8 @@ const ProductList = () => {
 
   const handleFormSubmit = (newProduct) => {
     if (editingProduct && editingProduct.id) {
-      // Update existing product
       setProducts(products.map(product => (product.id === newProduct.id ? newProduct : product)));
     } else {
-      // Add new product with a unique ID
       const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
       setProducts([...products, { ...newProduct, id: newId }]);
     }

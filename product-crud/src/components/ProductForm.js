@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const ProductForm = ({ product, onSubmit, onCancel }) => {
+const ProductForm = ({ product = {}, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     id: product.id || '',
     name: product.name || '',
@@ -81,6 +81,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
               value={formData.price}
               onChange={handleChange}
               required
+              min="0"
             />
           </Form.Group>
         </Modal.Body>

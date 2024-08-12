@@ -43,10 +43,13 @@ const ProductList = () => {
   };
 
   const handleFormSubmit = (newProduct) => {
-    if (editingProduct) {
+    if (editingProduct && editingProduct.id) {
+      // Update existing product
       setProducts(products.map(product => (product.id === newProduct.id ? newProduct : product)));
     } else {
-      setProducts([...products, { ...newProduct, id: products.length + 1 }]);
+      // Add new product with a unique ID
+      const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+      setProducts([...products, { ...newProduct, id: newId }]);
     }
     setEditingProduct(null);
   };
